@@ -96,3 +96,44 @@ CREATE TABLE IF NOT EXISTS Biblioteca.Funcionario (
   data_contratacao DATE NOT NULL,
   Usuarios_idUsuarios INT NOT NULL REFERENCES Biblioteca.Usuarios(idUsuarios)
 );
+
+-- Alteração na tabela Emprestimos para adicionar CASCADE DELETE
+ALTER TABLE Biblioteca.Emprestimos
+DROP CONSTRAINT IF EXISTS emprestimos_usuarios_fk,
+ADD CONSTRAINT emprestimos_usuarios_fk
+    FOREIGN KEY (Usuarios_idUsuarios)
+    REFERENCES Biblioteca.Usuarios(idUsuarios)
+    ON DELETE CASCADE;
+
+-- Alteração na tabela Reservas para adicionar CASCADE DELETE
+ALTER TABLE Biblioteca.Reservas
+DROP CONSTRAINT IF EXISTS reservas_usuarios_fk,
+ADD CONSTRAINT reservas_usuarios_fk
+    FOREIGN KEY (Usuarios_idUsuarios)
+    REFERENCES Biblioteca.Usuarios(idUsuarios)
+    ON DELETE CASCADE;
+
+-- Alteração na tabela Professor para adicionar CASCADE DELETE
+ALTER TABLE Biblioteca.Professor
+DROP CONSTRAINT IF EXISTS professor_usuarios_fk,
+ADD CONSTRAINT professor_usuarios_fk
+    FOREIGN KEY (Usuarios_idUsuarios)
+    REFERENCES Biblioteca.Usuarios(idUsuarios)
+    ON DELETE CASCADE;
+
+-- Alteração na tabela Aluno para adicionar CASCADE DELETE
+ALTER TABLE Biblioteca.Aluno
+DROP CONSTRAINT IF EXISTS aluno_usuarios_fk,
+ADD CONSTRAINT aluno_usuarios_fk
+    FOREIGN KEY (Usuarios_idUsuarios)
+    REFERENCES Biblioteca.Usuarios(idUsuarios)
+    ON DELETE CASCADE;
+
+-- Alteração na tabela Funcionario para adicionar CASCADE DELETE
+ALTER TABLE Biblioteca.Funcionario
+DROP CONSTRAINT IF EXISTS funcionario_usuarios_fk,
+ADD CONSTRAINT funcionario_usuarios_fk
+    FOREIGN KEY (Usuarios_idUsuarios)
+    REFERENCES Biblioteca.Usuarios(idUsuarios)
+    ON DELETE CASCADE;
+
