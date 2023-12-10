@@ -1,5 +1,5 @@
 -- Inserir autores
-INSERT INTO Biblioteca.Autores (nome, cpf, nacionalidade) VALUES
+INSERT INTO Autores (nome, cpf, nacionalidade) VALUES
 ('Machado de Assis', '11122233344', 'Brasileira'),
 ('Clarice Lispector', '22233344455', 'Brasileira'),
 ('Jorge Amado', '33344455566', 'Brasileira'),
@@ -12,7 +12,7 @@ INSERT INTO Biblioteca.Autores (nome, cpf, nacionalidade) VALUES
 ('Érico Veríssimo', '00011122233', 'Brasileira');
 
 -- Inserir livros
-INSERT INTO Biblioteca.Livros (titulo, ISBN, ano, editora, quantidade, Categoria) VALUES
+INSERT INTO Livros (titulo, ISBN, ano, editora, quantidade, Categoria) VALUES
 ('Dom Casmurro', 'ISBN12345', 1899, 'Editora A', 5, 'Romance'),
 ('A Hora da Estrela', 'ISBN23456', 1977, 'Editora B', 3, 'Romance'),
 ('Gabriela, Cravo e Canela', 'ISBN34567', 1958, 'Editora C', 4, 'Romance'),
@@ -41,7 +41,7 @@ INSERT INTO Biblioteca.Livros (titulo, ISBN, ano, editora, quantidade, Categoria
 ('A Rosa do Povo', 'ISBN87678', 1945, 'Editora Z', 2, 'Poesia');
 
 -- Associações de autores com livros
-INSERT INTO Biblioteca.Autores_dos_Livros (Autores_id_autor, Livros_idLivros) VALUES
+INSERT INTO Autores_dos_Livros (Autores_id_autor, Livros_idLivros) VALUES
 (1, 1), -- Machado de Assis - Dom Casmurro
 (2, 2), -- Clarice Lispector - A Hora da Estrela
 (3, 3), -- Jorge Amado - Gabriela, Cravo e Canela
@@ -70,5 +70,5 @@ INSERT INTO Biblioteca.Autores_dos_Livros (Autores_id_autor, Livros_idLivros) VA
 -- Continue adicionando associações conforme necessário
 
 -- Inserir usuários
-INSERT INTO Biblioteca.Usuarios (nickname, senha, matricula, permissao, autenticados) VALUES
-('admin', '123456', '123456', 'admin', TRUE);
+INSERT INTO Usuarios (nickname, senha, matricula, permissao) VALUES
+('admin', '123456', '123456', 'admin');

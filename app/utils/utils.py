@@ -14,6 +14,7 @@ def get_engine(user, password, host, port, db):
     # Verifica se o banco de dados existe, caso não exista, cria o banco de dados
     if not database_exists(url):
         create_database(url)
+        print(f"Banco de dados {db} criado com sucesso!")
 
     # Cria o engine de conexão com o banco de dados
     engine = create_engine(url, echo=False, pool_size=50)
@@ -37,12 +38,3 @@ def get_session():
     session = Session()
 
     return session
-
-
-def main():
-    session = get_session()
-    print(session)
-
-
-if __name__ == '__main__':
-    main()
