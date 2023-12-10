@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -15,7 +15,7 @@ class Autor(Base):
     nome = Column(String(100), nullable=False)
     cpf = Column(String(11), unique=True, nullable=False)
     nacionalidade = Column(String(50), nullable=False)
-    livros = relationship("Livro", secondary="Autores_dos_Livros")
+    livros = relationship("Livro", secondary="Autores_dos_Livros", overlaps="autores")
 
 
 class Livro(Base):
@@ -28,7 +28,7 @@ class Livro(Base):
     editora = Column(String(45), nullable=False)
     quantidade = Column(Integer, nullable=False)
     Categoria = Column(String(45), nullable=False)
-    autores = relationship("Autor", secondary="Autores_dos_Livros")
+    autores = relationship("Autor", secondary="Autores_dos_Livros", overlaps="livros")
 
 
 class Usuario(Base):

@@ -69,8 +69,32 @@ class ReservasController:
         finally:
             session.close()
 
+    @staticmethod
+    def buscar_reservas():
+        """ Busca todas as reservas. """
+        session = get_session()
+        try:
+            reservas = session.query(Reserva).all()
+            return reservas
+        finally:
+            session.close()
+
 # Exemplo de uso dos métodos:
 # nova_reserva = ReservasController.criar_reserva('pendente', '2023-01-01', 1, 1)
 # reserva = ReservasController.buscar_reserva(1)
 # atualizado = ReservasController.atualizar_reserva(1, status_reserva='confirmada')
 # ReservasController.deletar_reserva(1)
+
+
+def main():
+    reservas = ReservasController.buscar_reservas()
+
+    if reservas:
+        for reserva in reservas:
+            print(f"Reserva ID: {reserva.idReservas}, Status: {reserva.status_reserva}")
+    else:
+        print('Não existem reservas cadastradas.')
+
+
+if __name__ == '__main__':
+    main()

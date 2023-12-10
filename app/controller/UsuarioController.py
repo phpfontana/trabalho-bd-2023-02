@@ -81,6 +81,17 @@ class UsuarioController:
         finally:
             session.close()
 
+    @staticmethod
+    def buscar_usuarios():
+        """ Busca todos os usuários. """
+        session = get_session()
+        try:
+            usuarios = session.query(Usuario).all()
+            return usuarios
+        finally:
+            session.close()
+
+
 # Exemplo de uso dos métodos:
 # novo_usuario = UsuarioController.criar_usuario('nickname', 'senha', 'matricula', 'permissao')
 # usuario = UsuarioController.buscar_usuario(1)
@@ -90,11 +101,10 @@ class UsuarioController:
 
 
 def main():
-    novo_usuario = UsuarioController.criar_usuario('teste', 'test01', '12324242', 'admin')
+    usuarios = UsuarioController.buscar_usuarios()
 
-    usuario_nome = UsuarioController.buscar_usuario_por_nome('teste')
-
-    print(usuario_nome.nickname)
+    for usuario in usuarios:
+        print(f"ID: {usuario.idUsuarios} - Nome: {usuario.nickname} - Matricula: {usuario.matricula} - Permissao: {usuario.permissao}")
 
 
 if __name__ == '__main__':

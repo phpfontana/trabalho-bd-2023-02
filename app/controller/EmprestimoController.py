@@ -70,8 +70,31 @@ class EmprestimosController:
         finally:
             session.close()
 
+    @staticmethod
+    def buscar_emprestimos():
+        """ Busca todos os empréstimos. """
+        session = get_session()
+        try:
+            emprestimos = session.query(Emprestimo).all()
+            return emprestimos
+        finally:
+            session.close()
+
+
 # Exemplo de uso dos métodos:
 # novo_emprestimo = EmprestimosController.criar_emprestimo('ativo', '2023-01-01', '2023-01-15', 1, 1)
 # emprestimo = EmprestimosController.buscar_emprestimo(1)
 # atualizado = EmprestimosController.atualizar_emprestimo(1, status_emprestimo='concluido')
 # EmprestimosController.deletar_emprestimo(1)
+
+def main():
+    emprestimos = EmprestimosController.buscar_emprestimos()
+    if emprestimos:
+        for emprestimo in emprestimos:
+            print(f'ID: {emprestimo.idEmprestimos}, Status: {emprestimo.status_emprestimo}')
+    else:
+        print('Não há empréstimos cadastrados.')
+
+
+if __name__ == '__main__':
+    main()

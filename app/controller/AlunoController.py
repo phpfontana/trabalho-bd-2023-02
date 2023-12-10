@@ -1,44 +1,39 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import IntegrityError, NoResultFound
-
-from app.model.models import Usuario, Funcionario, Aluno
-
-# Configuração do engine e sessão do SQLAlchemy (deve ser configurada com suas credenciais)
-engine = create_engine('postgresql://usuario:senha@localhost/bd_2023_02')
-Session = sessionmaker(bind=engine)
-
+from sqlalchemy.orm import joinedload
+from app.model.models import Aluno, Usuario, Curso
+from app.utils.utils import get_session
+from sqlalchemy.exc import NoResultFound, IntegrityError
 
 class AlunoController:
 
     @staticmethod
-    def criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao, id_curso):
-        """ Cria um novo usuário e aluno no banco de dados. """
-        session = Session()
-
+    def criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao, curso_descricao):
+        session = get_session()
         try:
-            # Cria um novo objeto Usuario
-            novo_usuario = Usuario(
+            # Verifica se o curso já existe
+            curso = session.query(Curso).filter_by(Descricao=curso_descricao).one_or_none()
+            if not curso:
+                curso = Curso(Descricao=curso_descricao)
+                session.add(curso)
+                session.flush()  # Isso é necessário para obter o ID do curso recém-criado
+
+            usuario = Usuario(
                 nickname=nickname,
-                senha=senha,  # A senha deve ser armazenada como hash.
+                senha=senha,
                 matricula=matricula,
                 permissao=permissao
             )
-            session.add(novo_usuario)
-            session.flush()  # Obtém o ID do novo usuário
+            session.add(usuario)
+            session.flush()  # Isso é necessário para obter o ID do usuário recém-criado
 
-            # Cria um novo objeto Aluno associado ao usuário
-            novo_aluno = Aluno(
+            aluno = Aluno(
                 data_ingresso=data_ingresso,
                 data_previsao_conclusao=data_previsao_conclusao,
-                Curso_idCurso=id_curso,
-                Usuarios_idUsuarios=novo_usuario.idUsuarios
+                Curso_idCurso=curso.idCurso,
+                Usuarios_idUsuarios=usuario.idUsuarios
             )
-            session.add(novo_aluno)
-
-            # Commita a transação
+            session.add(aluno)
             session.commit()
-            return novo_aluno
+            return aluno
         except IntegrityError:
             session.rollback()
             raise
@@ -46,11 +41,14 @@ class AlunoController:
             session.close()
 
     @staticmethod
-    def buscar_aluno(id_aluno):
-        """ Busca um aluno pelo ID. """
-        session = Session()
+    def buscar_aluno_por_nome(nickname):
+        session = get_session()
         try:
-            aluno = session.query(Aluno).filter_by(idAluno=id_aluno).one()
+            aluno = session.query(Aluno).\
+                join(Usuario).\
+                filter(Usuario.nickname == nickname).\
+                options(joinedload(Aluno.usuario), joinedload(Aluno.curso)).\
+                one()
             return aluno
         except NoResultFound:
             return None
@@ -59,8 +57,7 @@ class AlunoController:
 
     @staticmethod
     def atualizar_aluno(id_aluno, **kwargs):
-        """ Atualiza os dados de um aluno. """
-        session = Session()
+        session = get_session()
         try:
             aluno = session.query(Aluno).filter_by(idAluno=id_aluno).one()
             for key, value in kwargs.items():
@@ -75,8 +72,7 @@ class AlunoController:
 
     @staticmethod
     def deletar_aluno(id_aluno):
-        """ Exclui um aluno do banco de dados. """
-        session = Session()
+        session = get_session()
         try:
             aluno = session.query(Aluno).filter_by(idAluno=id_aluno).one()
             session.delete(aluno)
@@ -88,7 +84,7 @@ class AlunoController:
             session.close()
 
 # Exemplo de uso dos métodos:
-# novo_aluno = AlunoController.criar_aluno('nickname', 'senha', 'matricula', 'permissao', '2023-01-01', '2024-01-01', 1)
-# aluno = AlunoController.buscar_aluno(1)
-# atualizado = AlunoController.atualizar_aluno(1, nickname='novo_nickname')
+# novo_aluno = AlunoController.criar_aluno('nickname', 'senha', 'matricula', 'permissao', 'data_ingresso', 'data_previsao_conclusao', 'curso_descricao')
+# aluno = AlunoController.buscar_aluno_por_nome('nickname')
+# atualizado = AlunoController.atualizar_aluno(1, data_ingresso='nova_data_ingresso')
 # AlunoController.deletar_aluno(1)

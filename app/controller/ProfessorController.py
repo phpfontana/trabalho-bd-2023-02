@@ -1,43 +1,40 @@
-from sqlalchemy import create_engine
+from sqlalchemy.orm import joinedload
+from app.model.models import Professor, Usuario, Curso
+from app.utils.utils import get_session
 from sqlalchemy.exc import NoResultFound, IntegrityError
-from sqlalchemy.orm import sessionmaker
-
-from app.model.models import Professor, Usuario
-# Configuração do engine e sessão do SQLAlchemy (deve ser configurada com suas credenciais)
-engine = create_engine('postgresql://usuario:senha@localhost/bd_2023_02')
-Session = sessionmaker(bind=engine)
 
 
 class ProfessorController:
 
     @staticmethod
-    def criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho, id_curso):
-        """ Cria um novo usuário e professor no banco de dados. """
-        session = Session()
-
+    def criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho, curso_descricao):
+        session = get_session()
         try:
-            # Cria um novo objeto Usuario
-            novo_usuario = Usuario(
+            # Verifica se o curso já existe
+            curso = session.query(Curso).filter_by(Descricao=curso_descricao).one_or_none()
+            if not curso:
+                curso = Curso(Descricao=curso_descricao)
+                session.add(curso)
+                session.flush()  # Isso é necessário para obter o ID do curso recém-criado
+
+            usuario = Usuario(
                 nickname=nickname,
-                senha=senha,  # A senha deve ser armazenada como hash.
+                senha=senha,
                 matricula=matricula,
                 permissao=permissao
             )
-            session.add(novo_usuario)
-            session.flush()  # Obtém o ID do novo usuário
+            session.add(usuario)
+            session.flush()  # Isso é necessário para obter o ID do usuário recém-criado
 
-            # Cria um novo objeto Professor associado ao usuário
-            novo_professor = Professor(
+            professor = Professor(
                 data_contratacao=data_contratacao,
                 regime_trabalho=regime_trabalho,
-                Curso_idCurso=id_curso,
-                Usuarios_idUsuarios=novo_usuario.idUsuarios
+                Curso_idCurso=curso.idCurso,
+                Usuarios_idUsuarios=usuario.idUsuarios
             )
-            session.add(novo_professor)
-
-            # Commita a transação
+            session.add(professor)
             session.commit()
-            return novo_professor
+            return professor
         except IntegrityError:
             session.rollback()
             raise
@@ -45,11 +42,14 @@ class ProfessorController:
             session.close()
 
     @staticmethod
-    def buscar_professor(id_professor):
-        """ Busca um professor pelo ID. """
-        session = Session()
+    def buscar_professor_por_nome(nickname):
+        session = get_session()
         try:
-            professor = session.query(Professor).filter_by(idProfessor=id_professor).one()
+            professor = session.query(Professor). \
+                join(Usuario). \
+                filter(Usuario.nickname == nickname). \
+                options(joinedload(Professor.usuario), joinedload(Professor.curso)). \
+                one()
             return professor
         except NoResultFound:
             return None
@@ -58,8 +58,7 @@ class ProfessorController:
 
     @staticmethod
     def atualizar_professor(id_professor, **kwargs):
-        """ Atualiza os dados de um professor. """
-        session = Session()
+        session = get_session()
         try:
             professor = session.query(Professor).filter_by(idProfessor=id_professor).one()
             for key, value in kwargs.items():
@@ -74,8 +73,7 @@ class ProfessorController:
 
     @staticmethod
     def deletar_professor(id_professor):
-        """ Exclui um professor do banco de dados. """
-        session = Session()
+        session = get_session()
         try:
             professor = session.query(Professor).filter_by(idProfessor=id_professor).one()
             session.delete(professor)
@@ -87,7 +85,19 @@ class ProfessorController:
             session.close()
 
 # Exemplo de uso dos métodos:
-# novo_professor = ProfessorController.criar_professor('nickname', 'senha', 'matricula', 'permissao', '2023-01-01', 'Integral', 1)
-# professor = ProfessorController.buscar_professor(1)
-# atualizado = ProfessorController.atualizar_professor(1, regime_trabalho='Parcial')
+# novo_professor = ProfessorController.criar_professor('nickname', 'senha', 'matricula', 'permissao', 'data_contratacao', 'regime_trabalho', 'curso_descricao')
+# professor = ProfessorController.buscar_professor_por_nome('nickname')
+# atualizado = ProfessorController.atualizar_professor(1, data_contratacao='nova_data_contratacao')
 # ProfessorController.deletar_professor(1)
+
+def main():
+    novo_professor = ProfessorController.criar_professor('nickname', 'senha', 'matricula', 'permissao', 'data_contratacao', 'regime_trabalho', 'curso_descricao')
+    professor = ProfessorController.buscar_professor_por_nome('nickname')
+
+    # extrair id do professor
+    id_professor = professor.idProfessor
+
+
+
+if __name__ == '__main__':
+    main()

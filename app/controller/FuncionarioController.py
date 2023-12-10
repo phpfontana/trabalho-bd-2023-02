@@ -1,42 +1,31 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import IntegrityError, NoResultFound
-
-from app.model.models import Usuario, Funcionario
-
-# Configuração do engine e sessão do SQLAlchemy (deve ser configurada com suas credenciais)
-engine = create_engine('postgresql://usuario:senha@localhost/bd_2023_02')
-Session = sessionmaker(bind=engine)
+from sqlalchemy.orm import joinedload
+from app.model.models import Funcionario, Usuario
+from app.utils.utils import get_session
+from sqlalchemy.exc import NoResultFound, IntegrityError
 
 
 class FuncionarioController:
 
     @staticmethod
     def criar_funcionario(nickname, senha, matricula, permissao, data_contratacao):
-        """ Cria um novo usuário e funcionário no banco de dados. """
-        session = Session()
-
+        session = get_session()
         try:
-            # Cria um novo objeto Usuario
-            novo_usuario = Usuario(
+            usuario = Usuario(
                 nickname=nickname,
-                senha=senha,  # Idealmente, você deve usar um hash de senha aqui!
+                senha=senha,
                 matricula=matricula,
                 permissao=permissao
             )
-            session.add(novo_usuario)
-            session.flush()  # Isso irá atribuir um ID ao novo usuário
+            session.add(usuario)
+            session.flush()  # Isso é necessário para obter o ID do usuário recém-criado
 
-            # Cria um novo objeto Funcionario associado ao usuário
-            novo_funcionario = Funcionario(
+            funcionario = Funcionario(
                 data_contratacao=data_contratacao,
-                Usuarios_idUsuarios=novo_usuario.idUsuarios
+                Usuarios_idUsuarios=usuario.idUsuarios
             )
-            session.add(novo_funcionario)
-
-            # Commita a transação
+            session.add(funcionario)
             session.commit()
-            return novo_funcionario
+            return funcionario
         except IntegrityError:
             session.rollback()
             raise
@@ -44,11 +33,14 @@ class FuncionarioController:
             session.close()
 
     @staticmethod
-    def buscar_funcionario(id_funcionario):
-        """ Busca um funcionário pelo ID. """
-        session = Session()
+    def buscar_funcionario_por_nome(nickname):
+        session = get_session()
         try:
-            funcionario = session.query(Funcionario).filter_by(idFuncionario=id_funcionario).one()
+            funcionario = session.query(Funcionario). \
+                join(Usuario). \
+                filter(Usuario.nickname == nickname). \
+                options(joinedload(Funcionario.usuario)). \
+                one()
             return funcionario
         except NoResultFound:
             return None
@@ -57,8 +49,7 @@ class FuncionarioController:
 
     @staticmethod
     def atualizar_funcionario(id_funcionario, **kwargs):
-        """ Atualiza os dados de um funcionário. """
-        session = Session()
+        session = get_session()
         try:
             funcionario = session.query(Funcionario).filter_by(idFuncionario=id_funcionario).one()
             for key, value in kwargs.items():
@@ -73,8 +64,7 @@ class FuncionarioController:
 
     @staticmethod
     def deletar_funcionario(id_funcionario):
-        """ Exclui um funcionário do banco de dados. """
-        session = Session()
+        session = get_session()
         try:
             funcionario = session.query(Funcionario).filter_by(idFuncionario=id_funcionario).one()
             session.delete(funcionario)
@@ -85,10 +75,8 @@ class FuncionarioController:
         finally:
             session.close()
 
-# Exemplo de como os métodos seriam chamados: novo_funcionario = FuncionarioController.criar_funcionario('nickname',
-# 'senha', 'matricula', 'permissao', '2023-01-01') funcionario = FuncionarioController.buscar_funcionario(1)
-# atualizado = FuncionarioController.atualizar_funcionario(1, nickname='novo_nickname')
+# Exemplo de uso dos métodos:
+# novo_funcionario = FuncionarioController.criar_funcionario('nickname', 'senha', 'matricula', 'permissao', 'data_contratacao')
+# funcionario = FuncionarioController.buscar_funcionario_por_nome('nickname')
+# atualizado = FuncionarioController.atualizar_funcionario(1, data_contratacao='nova_data')
 # FuncionarioController.deletar_funcionario(1)
-
-# Aqui você pode adicionar mais métodos conforme necessário, como
-# editar_funcionario, deletar_funcionario, buscar_funcionario, etc.

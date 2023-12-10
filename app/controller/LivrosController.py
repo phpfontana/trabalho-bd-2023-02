@@ -1,37 +1,23 @@
-from sqlalchemy.exc import IntegrityError
-from app.model.models import AutoresDosLivros, Livro
+from sqlalchemy.exc import NoResultFound, IntegrityError
 from app.utils.utils import get_session
+from app.model.models import Livro
 
 
-class LivrosController:
+class LivroController:
 
     @staticmethod
-    def criar_livro(titulo, isbn, ano, editora, quantidade, categoria, id_autores):
-        """ Cria um novo livro e associa autores a ele. """
+    def criar_livro(titulo, ISBN, ano, editora, quantidade, Categoria):
         session = get_session()
-
         try:
-            # Cria um novo objeto Livro
             novo_livro = Livro(
                 titulo=titulo,
-                ISBN=isbn,
+                ISBN=ISBN,
                 ano=ano,
                 editora=editora,
                 quantidade=quantidade,
-                Categoria=categoria
+                Categoria=Categoria
             )
             session.add(novo_livro)
-            session.flush()  # Obtém o ID do novo livro
-
-            # Associa os autores ao livro
-            for id_autor in id_autores:
-                associacao = AutoresDosLivros(
-                    Autores_id_autor=id_autor,
-                    Livros_idLivros=novo_livro.idLivros
-                )
-                session.add(associacao)
-
-            # Commita a transação
             session.commit()
             return novo_livro
         except IntegrityError:
@@ -40,10 +26,68 @@ class LivrosController:
         finally:
             session.close()
 
-    # Métodos para buscar, atualizar e deletar livros podem ser adicionados aqui.
+    @staticmethod
+    def buscar_livro_por_id(id_livro):
+        session = get_session()
+        try:
+            livro = session.query(Livro).filter_by(idLivros=id_livro).one()
+            return livro
+        except NoResultFound:
+            return None
+        finally:
+            session.close()
+
+    @staticmethod
+    def buscar_livros():
+        session = get_session()
+        try:
+            livros = session.query(Livro).all()
+            return livros
+        finally:
+            session.close()
+
+    @staticmethod
+    def atualizar_livro(id_livro, **kwargs):
+        session = get_session()
+        try:
+            livro = session.query(Livro).filter_by(idLivros=id_livro).one()
+            for key, value in kwargs.items():
+                setattr(livro, key, value)
+            session.commit()
+            return livro
+        except NoResultFound:
+            session.rollback()
+            return None
+        finally:
+            session.close()
+
+    @staticmethod
+    def deletar_livro(id_livro):
+        session = get_session()
+        try:
+            livro = session.query(Livro).filter_by(idLivros=id_livro).one()
+            session.delete(livro)
+            session.commit()
+        except NoResultFound:
+            session.rollback()
+        finally:
+            session.close()
+
+    @staticmethod
+    def buscar_livro_por_titulo(titulo):
+        session = get_session()
+        try:
+            livro = session.query(Livro).filter_by(titulo=titulo).one()
+            return livro
+        except NoResultFound:
+            return None
+        finally:
+            session.close()
 
 # Exemplo de uso dos métodos:
-# novo_livro = LivrosController.criar_livro('Título do Livro', 'ISBN123456', 2023, 'Editora X', 10, 'Categoria Y', [1, 2])
-# livro = LivrosController.buscar_livro(1)
-# atualizado = LivrosController.atualizar_livro(1, titulo='Novo Título')
-# LivrosController.deletar_livro(1)
+# novo_livro = LivroController.criar_livro('Dom Casmurro', 'ISBN12345', 1899, 'Editora A', 5, 'Romance')
+# livro = LivroController.buscar_livro_por_id(1)
+# livros = LivroController.buscar_livros()
+# atualizado = LivroController.atualizar_livro(1, titulo='Novo Título')
+# LivroController.deletar_livro(1)
+# livro = LivroController.buscar_livro_por_titulo('Dom Casmurro')
