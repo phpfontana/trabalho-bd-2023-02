@@ -17,7 +17,7 @@ def cadastrar_reserva():
 def atualizar_reserva():
     print("\n--- Atualizar Reserva ---")
     id_reserva = int(input("ID da reserva a ser atualizada: "))
-    reserva = ReservaController.buscar_reserva_por_id(id_reserva)
+    reserva = ReservasController.buscar_reserva(id_reserva)
     
     if reserva:
         print("Deixar em branco para manter o mesmo valor.")
