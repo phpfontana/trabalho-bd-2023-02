@@ -1,6 +1,7 @@
 from getpass import getpass
 
 from app.controller.UsuarioController import UsuarioController
+from app.view.admin_view import menu_administrador
 
 
 def login():
@@ -18,11 +19,6 @@ def login():
         return None
 
 
-def menu_admin():
-    # Implementar o menu do administrador
-    pass
-
-
 def menu_bibliotecario():
     # Implementar o menu do bibliotecário
     pass
@@ -37,8 +33,8 @@ def main():
     usuario_logado = login()
 
     if usuario_logado:
-        if usuario_logado.permissao == '1':  # Admin
-            menu_admin()
+        if usuario_logado.permissao == 'admin':  # Admin
+            menu_administrador()
         elif usuario_logado.permissao == '2':  # Bibliotecário
             menu_bibliotecario()
         elif usuario_logado.permissao == '3':  # Usuário Autenticado

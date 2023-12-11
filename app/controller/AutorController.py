@@ -2,6 +2,7 @@ from app.model.models import Autor
 from app.utils.utils import get_session
 from sqlalchemy.exc import NoResultFound, IntegrityError
 
+
 class AutorController:
 
     @staticmethod
@@ -74,7 +75,6 @@ class AutorController:
             return autores
         finally:
             session.close()
-
 
 # Exemplo de uso dos métodos:
 # novo_autor = AutorController.criar_autor('nome', 'cpf', 'nacionalidade')
