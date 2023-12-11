@@ -4,6 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 
+from app.controller.AlunoController import AlunoController
+from app.controller.EmprestimoController import EmprestimosController
+from app.controller.FuncionarioController import FuncionarioController
+from app.controller.ProfessorController import ProfessorController
 from app.controller.UsuarioController import UsuarioController
 from config import Config
 
@@ -41,6 +45,7 @@ def get_session():
 
     return session
 
+
 def login():
     print("Bem-vindo ao Sistema de Gerenciamento da Biblioteca")
     username = input('Nome de Usuário: ')
@@ -54,3 +59,25 @@ def login():
     else:
         print("Usuário ou senha incorretos!")
         return None
+
+
+def criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao, curso_descricao):
+    AlunoController.criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao,
+                                curso_descricao)
+
+
+def criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho, curso_descricao):
+
+    ProfessorController.criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho,
+                                        curso_descricao)
+
+
+def criar_funcionario(nickname, senha, matricula, permissao, data_contratacao):
+
+    FuncionarioController.criar_funcionario(nickname, senha, matricula, permissao, data_contratacao)
+
+
+def criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id):
+
+    EmprestimosController.criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id)
+

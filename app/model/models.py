@@ -110,6 +110,3 @@ class Funcionario(Base):
     usuario = relationship("Usuario", back_populates="funcionario")
 
 
-def create_all():
-    engine = get_engine_from_config()
-    Base.metadata.create_all(engine)
