@@ -36,4 +36,18 @@ def atualizar_reserva():
         print("Reserva não encontrada.")
 
 
-atualizar_reserva()
+def remover_reserva():
+    print("\n--- Remover Reserva ---")
+    id_reserva = int(input("ID da reserva a ser removida: "))
+    ReservasController.deletar_reserva(id_reserva)
+    print("Reserva removida com sucesso.")
+
+
+def listar_reservas():
+    print("\n--- Lista de Reservas ---")
+    reservas = ReservasController.buscar_reservas()
+    for reserva in reservas:
+        print(
+            f"ID: {reserva.idReservas}, Status: {reserva.status_reserva}, Data: {reserva.data_reserva}, Livro ID: {reserva.Livros_idLivros}, Usuário ID: {reserva.Usuarios_idUsuarios}"
+        )
+
