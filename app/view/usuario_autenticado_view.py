@@ -3,14 +3,6 @@ from app.utils.emprestimo_utils import listar_emprestimos
 from app.utils.livro_utils import listar_livros
 
 
-def consultar_reservas():
-    pass
-
-
-def realizar_reserva(usuario):
-    pass
-
-
 def menu_usuario_autenticado(usuario):
     while True:
         print("\n--- Menu do Usuário ---")
