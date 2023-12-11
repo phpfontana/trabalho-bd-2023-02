@@ -4,10 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 
-from app.controller.AlunoController import AlunoController
-from app.controller.EmprestimoController import EmprestimosController
-from app.controller.FuncionarioController import FuncionarioController
-from app.controller.ProfessorController import ProfessorController
+
 from config import Config
 
 
