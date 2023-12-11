@@ -1,3 +1,4 @@
+from app.utils.autor_utils import cadastrar_autor, atualizar_autor, remover_autor, listar_autores
 from app.utils.livro_utils import cadastrar_livro, atualizar_livro, remover_livro, listar_livros, \
     associar_autores_livro_por_nome, remover_associacao_autor_livro
 from app.utils.usuario_utils import listar_usuarios, remover_usuario, cadastrar_professor, \
@@ -64,14 +65,28 @@ def gerenciar_livros():
 
 
 def gerenciar_autores():
-    # Implemente as funções para criar, atualizar e remover autores
-    # Exemplo:
-    # print("\n--- Gerenciamento de Autores ---")
-    # print("1. Cadastrar Autor")
-    # print("2. Atualizar Autor")
-    # print("3. Remover Autor")
-    # ...
-    pass
+    while True:
+        print("\n--- Gerenciamento de Autores ---")
+        print("1. Cadastrar Autor")
+        print("2. Atualizar Autor")
+        print("3. Remover Autor")
+        print("4. Listar Autores")
+        print("0. Voltar para o menu anterior")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            cadastrar_autor()
+        elif opcao == '2':
+            atualizar_autor()
+        elif opcao == '3':
+            remover_autor()
+        elif opcao == '4':
+            listar_autores()
+        elif opcao == '0':
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
 
 
 def gerenciar_usuarios():
@@ -145,5 +160,3 @@ def gerenciar_reservas():
     pass
 
 
-if __name__ == '__main__':
-    menu_administrador()

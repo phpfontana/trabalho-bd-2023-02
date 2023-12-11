@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 
 from app.utils.utils import get_engine_from_config
 
-
 Base = declarative_base()
 
 
@@ -43,7 +42,6 @@ class Usuario(Base):
     professor = relationship("Professor", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
     aluno = relationship("Aluno", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
     funcionario = relationship("Funcionario", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
-
 
 
 class Emprestimo(Base):
@@ -90,6 +88,7 @@ class Professor(Base):
     Curso_idCurso = Column(Integer, ForeignKey('Curso.idCurso'))
     Usuarios_idUsuarios = Column(Integer, ForeignKey('Usuarios.idUsuarios'))
     usuario = relationship("Usuario", back_populates="professor")
+
 
 class Aluno(Base):
     __tablename__ = 'Aluno'
