@@ -77,39 +77,63 @@ def gerenciar_autores():
 def gerenciar_usuarios():
     while True:
         print("\n--- Gerenciamento de Usuários ---")
-        print("1. Cadastrar Funcionário")
-        print("2. Cadastrar Aluno")
-        print("3. Cadastrar Professor")
-        print("4. Atualizar Funcionário")
-        print("5. Atualizar Aluno")
-        print("6. Atualizar Professor")
-        print("7. Remover Usuário")
-        print("8. Listar Usuários")
+        print("1. Cadastrar Usuario")
+        print("2. Atualizar Usuario")
+        print("3. Remover Usuário")
+        print("4. Listar Usuários")
         print("0. Voltar para o menu anterior")
 
         opcao = input("Escolha uma opção: ")
 
         if opcao == '1':
-            cadastrar_funcionario()
+            cadastrar_usuario()
         elif opcao == '2':
-            cadastrar_aluno()
+            atualizar_usuario()
         elif opcao == '3':
-            cadastrar_professor()
-        elif opcao == '4':
-            atualizar_funcionario()
-        elif opcao == '5':
-            atualizar_aluno()
-        elif opcao == '6':
-            atualizar_professor()
-        elif opcao == '7':
             remover_usuario()
-        elif opcao == '8':
+        elif opcao == '4':
             listar_usuarios()
         elif opcao == '0':
             break
         else:
             print("Opção inválida. Tente novamente.")
 
+
+def cadastrar_usuario():
+    print("\n--- Cadastrar Usuário ---")
+    print("Escolha o tipo de usuário a ser cadastrado:")
+    print("1. Funcionário")
+    print("2. Aluno")
+    print("3. Professor")
+    tipo_escolha = input("Digite o número correspondente: ")
+
+    if tipo_escolha == '1':
+        cadastrar_funcionario()
+    elif tipo_escolha == '2':
+        cadastrar_aluno()
+    elif tipo_escolha == '3':
+        cadastrar_professor()
+    else:
+        print("Opção inválida. Tente novamente.")
+
+
+def atualizar_usuario():
+    print("\n--- Atualizar Usuário ---")
+    print("Escolha o tipo de usuário a ser atualizado:")
+    print("1. Funcionário")
+    print("2. Aluno")
+    print("3. Professor")
+    tipo_escolha = input("Digite o número correspondente: ")
+
+    if tipo_escolha == '1':
+        atualizar_funcionario()
+    elif tipo_escolha == '2':
+        atualizar_aluno()
+    elif tipo_escolha == '3':
+        atualizar_professor()
+    else:
+        print("Opção inválida. Tente novamente.")
+    pass
 
 def gerenciar_emprestimos():
     # Implemente as funções para criar, atualizar e remover empréstimos
