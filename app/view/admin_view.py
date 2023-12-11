@@ -4,7 +4,7 @@ from app.utils.usuario_utils import listar_usuarios, remover_usuario, cadastrar_
     cadastrar_aluno, cadastrar_funcionario, atualizar_professor, atualizar_funcionario, atualizar_aluno
 
 
-def menu_administrador():
+def menu_administrador(usuario_logado):
     while True:
         print("\n--- Menu do Administrador ---")
         print("1. Gerenciar Livros")

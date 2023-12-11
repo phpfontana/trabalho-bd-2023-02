@@ -29,22 +29,16 @@ def menu_usuario_autenticado():
     pass
 
 
-def menu_usuario_nao_autenticado():
-    pass
-
-
 def main():
     usuario_logado = login()
 
     if usuario_logado:
         if usuario_logado.permissao == 'admin':  # Admin
             menu_administrador()
-        elif usuario_logado.permissao == 'bibliotecario':  # Bibliotecário
+        elif usuario_logado.permissao == '2':  # Bibliotecário
             menu_bibliotecario()
         elif usuario_logado.permissao == '3':  # Usuário Autenticado
             menu_usuario_autenticado()
-        elif usuario_logado.permissao == '4':  # Usuário não autenticado
-            menu_usuario_nao_autenticado()
         else:
             print("Permissão desconhecida.")
 
