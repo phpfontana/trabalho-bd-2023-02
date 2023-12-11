@@ -7,26 +7,23 @@ from app.controller.ProfessorController import ProfessorController
 from app.model.models import Base, Autor, Livro, AutoresDosLivros
 from app.utils.utils import get_engine_from_config, get_session
 
+
 def criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao, curso_descricao):
     AlunoController.criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao,
                                 curso_descricao)
 
 
 def criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho, curso_descricao):
-
     ProfessorController.criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho,
                                         curso_descricao)
 
 
 def criar_funcionario(nickname, senha, matricula, permissao, data_contratacao):
-
     FuncionarioController.criar_funcionario(nickname, senha, matricula, permissao, data_contratacao)
 
 
 def criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id):
-
     EmprestimosController.criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id)
-
 
 
 def reset_database():
@@ -156,34 +153,34 @@ def main():
     session.close()
 
     # Criar Funcionarios
-    criar_funcionario(nickname='admin', senha='admin', matricula='123456', permissao='1',
+    criar_funcionario(nickname='admin', senha='admin', matricula='2111001', permissao='1',
                       data_contratacao='2020-01-01')
-    criar_funcionario(nickname='bibliotecario', senha='123456', matricula='654321', permissao='2',
+    criar_funcionario(nickname='bibliotecario', senha='123456', matricula='2111002', permissao='2',
                       data_contratacao='2020-01-01')
 
-    criar_professor(nickname='jeremias', senha='123456', matricula='654321', permissao='3',
+    criar_professor(nickname='jeremias', senha='123456', matricula='2111003', permissao='3',
                     data_contratacao='2020-01-01', regime_trabalho='40',
                     curso_descricao='Ciência da Computação')
-    criar_professor(nickname='lucas', senha='123456', matricula='654321', permissao='3',
+    criar_professor(nickname='lucas', senha='123456', matricula='2111004', permissao='3',
                     data_contratacao='2020-01-01', regime_trabalho='40',
                     curso_descricao='Engenharia da Software')
 
-    criar_aluno(nickname='aluno', senha='123456', matricula='654321', permissao='3',
+    criar_aluno(nickname='aluno', senha='123456', matricula='2111005', permissao='3',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Ciência da Computação')
-    criar_aluno(nickname='aluno2', senha='123456', matricula='654321', permissao='3',
+    criar_aluno(nickname='aluno2', senha='123456', matricula='2111006', permissao='3',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Engenharia da Software')
-    criar_aluno(nickname='aluno3', senha='123456', matricula='654321', permissao='3',
+    criar_aluno(nickname='aluno3', senha='123456', matricula='2111007', permissao='3',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Ciência da Computação')
-    criar_aluno(nickname='aluno4', senha='123456', matricula='654321', permissao='4',
+    criar_aluno(nickname='aluno4', senha='123456', matricula='2111008', permissao='4',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Engenharia da Software')
-    criar_aluno(nickname='aluno5', senha='123456', matricula='654321', permissao='4',
+    criar_aluno(nickname='aluno5', senha='123456', matricula='2111009', permissao='4',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Ciência da Computação')
-    criar_aluno(nickname='aluno6', senha='123456', matricula='654321', permissao='4',
+    criar_aluno(nickname='aluno6', senha='123456', matricula='2111010', permissao='4',
                 data_ingresso='2020-01-01', data_previsao_conclusao='2020-01-01',
                 curso_descricao='Engenharia da Software')
 
@@ -198,13 +195,13 @@ def main():
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
                      data_devolucao='2020-01-01', usuario_id='5', livro_id='5')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
-                                                data_devolucao='2020-01-01', usuario_id='6', livro_id='6')
+                     data_devolucao='2020-01-01', usuario_id='6', livro_id='6')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
-                                                data_devolucao='2020-01-01', usuario_id='7', livro_id='7')
+                     data_devolucao='2020-01-01', usuario_id='7', livro_id='7')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
-                                                data_devolucao='2020-01-01', usuario_id='8', livro_id='8')
+                     data_devolucao='2020-01-01', usuario_id='8', livro_id='8')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
-                                                data_devolucao='2020-01-01', usuario_id='9', livro_id='9')
+                     data_devolucao='2020-01-01', usuario_id='9', livro_id='9')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
                      data_devolucao='2020-01-01', usuario_id='10', livro_id='10')
 
