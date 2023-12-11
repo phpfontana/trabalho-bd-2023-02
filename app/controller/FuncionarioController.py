@@ -1,4 +1,6 @@
 from sqlalchemy.orm import joinedload
+
+from app.controller.UsuarioController import UsuarioController
 from app.model.models import Funcionario, Usuario
 from app.utils.utils import get_session
 from sqlalchemy.exc import NoResultFound, IntegrityError
@@ -48,12 +50,38 @@ class FuncionarioController:
             session.close()
 
     @staticmethod
+    def buscar_funcionario_por_usuario_id(usuario_id):
+        """ Busca um funcionario pelo ID do usuário associado. """
+        session = get_session()
+        try:
+            funcionario = session.query(Funcionario).filter_by(Usuarios_idUsuarios=usuario_id).one()
+            return funcionario
+        except NoResultFound:
+            return None
+        finally:
+            session.close()
+
+    @staticmethod
     def atualizar_funcionario(id_funcionario, **kwargs):
         session = get_session()
         try:
             funcionario = session.query(Funcionario).filter_by(idFuncionario=id_funcionario).one()
+
+            # Atributos específicos do Funcionário
+            funcionario_attrs = ['data_contratacao']  # Adicione outros atributos de Funcionario aqui
+            usuario_attrs = ['nickname', 'senha', 'matricula', 'permissao']  # Adicione outros atributos de Usuario aqui
+
+            # Atualiza atributos do Funcionário
             for key, value in kwargs.items():
-                setattr(funcionario, key, value)
+                if key in funcionario_attrs:
+                    setattr(funcionario, key, value)
+
+            # Atualiza atributos do Usuario associado
+            usuario = funcionario.usuario
+            for key, value in kwargs.items():
+                if key in usuario_attrs:
+                    setattr(usuario, key, value)
+
             session.commit()
             return funcionario
         except NoResultFound:
@@ -74,6 +102,7 @@ class FuncionarioController:
             return None
         finally:
             session.close()
+
 
 # Exemplo de uso dos métodos:
 # novo_funcionario = FuncionarioController.criar_funcionario('nickname', 'senha', 'matricula', 'permissao', 'data_contratacao')

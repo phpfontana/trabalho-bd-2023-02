@@ -1,5 +1,7 @@
 from app.utils.livro_utils import cadastrar_livro, atualizar_livro, remover_livro, listar_livros, \
     associar_autores_livro_por_nome, remover_associacao_autor_livro
+from app.utils.usuario_utils import listar_usuarios, remover_usuario, cadastrar_professor, \
+    cadastrar_aluno, cadastrar_funcionario, atualizar_professor, atualizar_funcionario, atualizar_aluno
 
 
 def menu_administrador():
@@ -73,8 +75,40 @@ def gerenciar_autores():
 
 
 def gerenciar_usuarios():
-    # Implemente as funções para criar, atualizar e remover usuários
-    pass
+    while True:
+        print("\n--- Gerenciamento de Usuários ---")
+        print("1. Cadastrar Funcionário")
+        print("2. Cadastrar Aluno")
+        print("3. Cadastrar Professor")
+        print("4. Atualizar Funcionário")
+        print("5. Atualizar Aluno")
+        print("6. Atualizar Professor")
+        print("7. Remover Usuário")
+        print("8. Listar Usuários")
+        print("0. Voltar para o menu anterior")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            cadastrar_funcionario()
+        elif opcao == '2':
+            cadastrar_aluno()
+        elif opcao == '3':
+            cadastrar_professor()
+        elif opcao == '4':
+            atualizar_funcionario()
+        elif opcao == '5':
+            atualizar_aluno()
+        elif opcao == '6':
+            atualizar_professor()
+        elif opcao == '7':
+            remover_usuario()
+        elif opcao == '8':
+            listar_usuarios()
+        elif opcao == '0':
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
 
 
 def gerenciar_emprestimos():
