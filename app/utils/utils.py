@@ -3,6 +3,8 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
+
+from app.controller.UsuarioController import UsuarioController
 from config import Config
 
 
@@ -38,3 +40,17 @@ def get_session():
     session = Session()
 
     return session
+
+def login():
+    print("Bem-vindo ao Sistema de Gerenciamento da Biblioteca")
+    username = input('Nome de Usuário: ')
+    password = input('Senha: ')
+
+    usuario = UsuarioController.buscar_usuario_por_nome(username)
+
+    if usuario and usuario.senha == password:  # Aqui deve-se implementar uma verificação de hash de senha
+        print(f"Bem-vindo, {usuario.nickname}!")
+        return usuario
+    else:
+        print("Usuário ou senha incorretos!")
+        return None

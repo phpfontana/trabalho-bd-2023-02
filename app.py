@@ -1,48 +1,27 @@
-import os
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import database_exists, create_database
-from config import Config
+from app.controller.UsuarioController import UsuarioController
+from app.utils.utils import login
+from app.view.admin_view import menu_administrador
+from app.view.usuario_autenticado_view import menu_usuario_autenticado
 
 
-# Cria o engine de conexão com o banco de dados
-def get_engine(user, password, host, port, db):
-    # Cria o engine de conexão com o banco de dados
-    url = f"postgresql://{user}:{password}@{host}:{port}/{db}"
-
-    # Verifica se o banco de dados existe, caso não exista, cria o banco de dados
-    if not database_exists(url):
-        create_database(url)
-
-    # Cria o engine de conexão com o banco de dados
-    engine = create_engine(url, echo=False, pool_size=50)
-
-    return engine
-
-
-def get_engine_from_config():
-    return get_engine(
-        Config.SQLALCHEMY_DATABASE_USER,
-        Config.SQLALCHEMY_DATABASE_PASSWORD,
-        Config.SQLALCHEMY_DATABASE_HOST,
-        Config.SQLALCHEMY_DATABASE_PORT,
-        Config.SQLALCHEMY_DATABASE_NAME
-    )
-
-
-def get_session():
-    engine = get_engine_from_config()
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    return session
+def menu_bibliotecario():
+    # Implementar o menu do bibliotecário
+    pass
 
 
 def main():
-    session = get_session()
-    print(session)
+    usuario_logado = login()
+
+    if usuario_logado:
+        if usuario_logado.permissao == 'admin':  # Admin
+            menu_administrador(usuario_logado)
+        elif usuario_logado.permissao == '2':  # Bibliotecário
+            menu_bibliotecario()
+        elif usuario_logado.permissao == '3':  # Usuário Autenticado
+            menu_usuario_autenticado(usuario_logado)
+        else:
+            print("Permissão desconhecida.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

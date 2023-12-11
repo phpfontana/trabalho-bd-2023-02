@@ -43,7 +43,7 @@ def main():
     session.add_all(livros)
 
     # Insira usuário
-    usuario = Usuario(nickname='admin', senha='123456', matricula='123456', permissao='admin')
+    usuario = Usuario(nickname='admin', senha='123456', matricula='123456', permissao='1')
     session.add(usuario)
 
     session.commit()
