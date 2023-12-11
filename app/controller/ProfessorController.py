@@ -42,14 +42,23 @@ class ProfessorController:
             session.close()
 
     @staticmethod
-    def buscar_professor_por_nome(nickname):
+    def buscar_professor_por_id(id_professor):
+        """ Busca um professor pelo ID. """
         session = get_session()
         try:
-            professor = session.query(Professor). \
-                join(Usuario). \
-                filter(Usuario.nickname == nickname). \
-                options(joinedload(Professor.usuario), joinedload(Professor.curso)). \
-                one()
+            professor = session.query(Professor).filter_by(idProfessor=id_professor).one()
+            return professor
+        except NoResultFound:
+            return None
+        finally:
+            session.close()
+
+    @staticmethod
+    def buscar_professor_por_usuario_id(usuario_id):
+        """ Busca um professor pelo ID do usuário associado. """
+        session = get_session()
+        try:
+            professor = session.query(Professor).filter_by(Usuarios_idUsuarios=usuario_id).one()
             return professor
         except NoResultFound:
             return None
@@ -61,8 +70,22 @@ class ProfessorController:
         session = get_session()
         try:
             professor = session.query(Professor).filter_by(idProfessor=id_professor).one()
+
+            # Atributos específicos do Professor
+            professor_attrs = ['data_contratacao', 'regime_trabalho', 'Curso_idCurso']  # Adicione outros atributos de Professor aqui
+            usuario_attrs = ['nickname', 'senha', 'matricula', 'permissao']  # Adicione outros atributos de Usuario aqui
+
+            # Atualiza atributos do Professor
             for key, value in kwargs.items():
-                setattr(professor, key, value)
+                if key in professor_attrs:
+                    setattr(professor, key, value)
+
+            # Atualiza atributos do Usuario associado
+            usuario = professor.usuario
+            for key, value in kwargs.items():
+                if key in usuario_attrs:
+                    setattr(usuario, key, value)
+
             session.commit()
             return professor
         except NoResultFound:
@@ -90,14 +113,4 @@ class ProfessorController:
 # atualizado = ProfessorController.atualizar_professor(1, data_contratacao='nova_data_contratacao')
 # ProfessorController.deletar_professor(1)
 
-def main():
-    novo_professor = ProfessorController.criar_professor('nickname', 'senha', 'matricula', 'permissao', 'data_contratacao', 'regime_trabalho', 'curso_descricao')
-    professor = ProfessorController.buscar_professor_por_nome('nickname')
 
-    # extrair id do professor
-    id_professor = professor.idProfessor
-
-
-
-if __name__ == '__main__':
-    main()

@@ -39,6 +39,11 @@ class Usuario(Base):
     senha = Column(String(45), nullable=False)
     matricula = Column(String(45), unique=True, nullable=False)
     permissao = Column(String(45), nullable=False)
+    # Adicionando relações
+    professor = relationship("Professor", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
+    aluno = relationship("Aluno", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
+    funcionario = relationship("Funcionario", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
+
 
 
 class Emprestimo(Base):
@@ -84,7 +89,7 @@ class Professor(Base):
     regime_trabalho = Column(String(45), nullable=False)
     Curso_idCurso = Column(Integer, ForeignKey('Curso.idCurso'))
     Usuarios_idUsuarios = Column(Integer, ForeignKey('Usuarios.idUsuarios'))
-
+    usuario = relationship("Usuario", back_populates="professor")
 
 class Aluno(Base):
     __tablename__ = 'Aluno'
@@ -94,6 +99,7 @@ class Aluno(Base):
     data_previsao_conclusao = Column(Date, nullable=False)
     Curso_idCurso = Column(Integer, ForeignKey('Curso.idCurso'))
     Usuarios_idUsuarios = Column(Integer, ForeignKey('Usuarios.idUsuarios'))
+    usuario = relationship("Usuario", back_populates="aluno")
 
 
 class Funcionario(Base):
@@ -102,6 +108,7 @@ class Funcionario(Base):
     idFuncionario = Column(Integer, primary_key=True)
     data_contratacao = Column(Date, nullable=False)
     Usuarios_idUsuarios = Column(Integer, ForeignKey('Usuarios.idUsuarios'))
+    usuario = relationship("Usuario", back_populates="funcionario")
 
 
 def create_all():
