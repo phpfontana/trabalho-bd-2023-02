@@ -1,7 +1,32 @@
 from sqlalchemy_utils import database_exists, create_database, drop_database
+
+from app.controller.AlunoController import AlunoController
+from app.controller.EmprestimoController import EmprestimosController
+from app.controller.FuncionarioController import FuncionarioController
+from app.controller.ProfessorController import ProfessorController
 from app.model.models import Base, Autor, Livro, AutoresDosLivros
-from app.utils.utils import get_engine_from_config, get_session, criar_funcionario, criar_professor, criar_aluno, \
-    criar_emprestimo
+from app.utils.utils import get_engine_from_config, get_session
+
+def criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao, curso_descricao):
+    AlunoController.criar_aluno(nickname, senha, matricula, permissao, data_ingresso, data_previsao_conclusao,
+                                curso_descricao)
+
+
+def criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho, curso_descricao):
+
+    ProfessorController.criar_professor(nickname, senha, matricula, permissao, data_contratacao, regime_trabalho,
+                                        curso_descricao)
+
+
+def criar_funcionario(nickname, senha, matricula, permissao, data_contratacao):
+
+    FuncionarioController.criar_funcionario(nickname, senha, matricula, permissao, data_contratacao)
+
+
+def criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id):
+
+    EmprestimosController.criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id)
+
 
 
 def reset_database():
