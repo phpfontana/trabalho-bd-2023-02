@@ -16,6 +16,7 @@ def login():
         return usuario
     else:
         print("Usuário ou senha incorretos!")
+        login()
         return None
 
 
@@ -34,11 +35,11 @@ def main():
 
     if usuario_logado:
         if usuario_logado.permissao == 'admin':  # Admin
-            menu_administrador()
+            menu_administrador(usuario_logado)
         elif usuario_logado.permissao == '2':  # Bibliotecário
-            menu_bibliotecario()
+            menu_bibliotecario(usuario_logado)
         elif usuario_logado.permissao == '3':  # Usuário Autenticado
-            menu_usuario_autenticado()
+            menu_usuario_autenticado(usuario_logado)
         else:
             print("Permissão desconhecida.")
 
