@@ -1,4 +1,6 @@
 from app.utils.autor_utils import cadastrar_autor, atualizar_autor, remover_autor, listar_autores
+from app.utils.emprestimo_utils import cadastrar_emprestimo, atualizar_emprestimo, remover_emprestimo, \
+    listar_emprestimos
 from app.utils.livro_utils import cadastrar_livro, atualizar_livro, remover_livro, listar_livros, \
     associar_autores_livro_por_nome, remover_associacao_autor_livro
 from app.utils.usuario_utils import listar_usuarios, remover_usuario, cadastrar_professor, \
@@ -150,13 +152,33 @@ def atualizar_usuario():
         print("Opção inválida. Tente novamente.")
     pass
 
+
 def gerenciar_emprestimos():
-    # Implemente as funções para criar, atualizar e remover empréstimos
-    pass
+    while True:
+        print("\n--- Gerenciamento de Empréstimos ---")
+        print("1. Cadastrar Empréstimo")
+        print("2. Atualizar Empréstimo")
+        print("3. Remover Empréstimo")
+        print("4. Listar Empréstimos")
+        print("0. Voltar para o menu anterior")
+
+        opcao = input("Escolha uma opção: ")
+
+        if opcao == '1':
+            cadastrar_emprestimo()
+        elif opcao == '2':
+            atualizar_emprestimo()
+        elif opcao == '3':
+            remover_emprestimo()
+        elif opcao == '4':
+            listar_emprestimos()
+        elif opcao == '0':
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+        pass
 
 
 def gerenciar_reservas():
     # Implemente as funções para criar, atualizar e remover reservas
     pass
-
-

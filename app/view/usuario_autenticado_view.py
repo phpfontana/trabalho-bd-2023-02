@@ -1,7 +1,17 @@
+from app.utils.autor_utils import listar_autores
+from app.utils.emprestimo_utils import listar_emprestimos
 from app.utils.livro_utils import listar_livros
 
 
-def menu_usuario_atuenticado(usuario):
+def consultar_reservas():
+    pass
+
+
+def realizar_reserva(usuario):
+    pass
+
+
+def menu_usuario_autenticado(usuario):
     while True:
         print("\n--- Menu do Usuário ---")
         print("1. Consultar Livros")
@@ -16,9 +26,9 @@ def menu_usuario_atuenticado(usuario):
         if opcao == '1':
             listar_livros()
         elif opcao == '2':
-            consultar_autores()
+            listar_autores()
         elif opcao == '3':
-            consultar_emprestimos()
+            listar_emprestimos()
         elif opcao == '4':
             consultar_reservas()
         elif opcao == '5':

@@ -2,6 +2,7 @@ from app.model.models import Emprestimo
 from app.utils.utils import get_session
 from sqlalchemy.exc import NoResultFound, IntegrityError
 
+
 class EmprestimosController:
 
     @staticmethod
