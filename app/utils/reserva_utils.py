@@ -51,3 +51,29 @@ def listar_reservas():
             f"ID: {reserva.idReservas}, Status: {reserva.status_reserva}, Data: {reserva.data_reserva}, Livro ID: {reserva.Livros_idLivros}, Usuário ID: {reserva.Usuarios_idUsuarios}"
         )
 
+
+
+def cadastrar_reserva_usuario(usuario):
+    print("\n--- Cadastrar Nova Reserva ---")
+    status_reserva = input("Status da reserva: ")
+    data_reserva = input("Data da reserva (formato YYYY-MM-DD): ")
+    Livros_idLivros = int(input("ID do livro reservado: "))
+    Usuarios_idUsuarios = usuario.id_usuario
+
+    nova_reserva = ReservasController.criar_reserva(status_reserva, data_reserva, Usuarios_idUsuarios, Livros_idLivros)
+
+    if nova_reserva:
+        print("Reserva cadastrada com sucesso!")
+    else:
+        print("Erro ao cadastrar reserva.")
+
+
+def listar_reservas_do_usuario(usuario):
+    print("\n--- Lista de Reservas ---")
+    reservas = ReservasController.buscar_reservas_pelo_id_usuario(usuario)
+    for reserva in reservas:
+        print(
+            f"ID: {reserva.idReservas}, Status: {reserva.status_reserva}, Data: {reserva.data_reserva}, Livro ID: {reserva.Livros_idLivros}, Usuário ID: {reserva.Usuarios_idUsuarios}"
+        )
+
+

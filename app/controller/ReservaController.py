@@ -38,7 +38,16 @@ class ReservasController:
             return None
         finally:
             session.close()
-
+    def buscar_reservas_pelo_id_usuario(Usuarios_idUsuarios):
+        """ Busca todas as reservas de um usuário pelo ID de usuário. """
+        session = get_session()
+        try:
+            reservas = session.query(Reserva).filter_by(Usuarios_idUsuarios=Usuarios_idUsuarios).all()
+            return reservas if reservas else []  # Retorna uma lista vazia se não houver reservas
+        except NoResultFound:
+            return []  # Retorna uma lista vazia se não encontrar nenhuma reserva
+        finally:
+            session.close()
     @staticmethod
     def atualizar_reserva(id_reserva, **kwargs):
         """ Atualiza os dados de uma reserva. """
