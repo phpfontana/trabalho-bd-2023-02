@@ -3,7 +3,7 @@ from app.utils.emprestimo_utils import cadastrar_emprestimo, atualizar_emprestim
     listar_emprestimos
 from app.utils.livro_utils import cadastrar_livro, atualizar_livro, remover_livro, listar_livros, \
     associar_autores_livro_por_nome, remover_associacao_autor_livro
-from app.utils.reserva_utils import cadastrar_reserva, atualizar_reserva
+from app.utils.reserva_utils import cadastrar_reserva, atualizar_reserva, remover_reserva, listar_reservas
 from app.utils.usuario_utils import listar_usuarios, remover_usuario, cadastrar_professor, \
     cadastrar_aluno, cadastrar_funcionario, atualizar_professor, atualizar_funcionario, atualizar_aluno
 
