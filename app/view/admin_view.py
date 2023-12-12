@@ -180,7 +180,6 @@ def gerenciar_emprestimos():
         pass
 
 
-
 def gerenciar_reservas():
     while True:
         print("\n--- Gerenciamento de Reservas ---")

@@ -1,6 +1,7 @@
 from app.utils.autor_utils import listar_autores
 from app.utils.livro_utils import listar_livros
 
+
 def menu_usuario(usuario):
     while True:
         print("\n--- Menu do Administrador ---")
@@ -18,5 +19,3 @@ def menu_usuario(usuario):
             break
         else:
             print("Opção inválida. Tente novamente.")
-
-

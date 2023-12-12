@@ -38,7 +38,7 @@ def cadastrar_emprestimo():
     data_devolucao = input("Data de devolução (YYYY-MM-DD): ")
 
     # Criar o empréstimo e atualizar a quantidade do livro
-    status_emprestimo = "Emprestimo"
+    status_emprestimo = "1"  # Emprestado
     novo_emprestimo = EmprestimosController.criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao,
                                                              usuario.idUsuarios, livro.idLivros)
 
@@ -58,7 +58,8 @@ def atualizar_emprestimo():
 
     if emprestimo:
         print("Deixe em branco para manter o mesmo valor.")
-        status_emprestimo = input(f"Status [{emprestimo.status_emprestimo}]: ") or emprestimo.status_emprestimo
+        status_emprestimo = input(f"Status [{emprestimo.status_emprestimo}] (1 - Emprestado, 2 - Finalizado): ") or \
+                            emprestimo.status_emprestimo
         data_emprestimo = input(f"Data de Empréstimo [{emprestimo.data_emprestimo}]: ") or emprestimo.data_emprestimo
         data_devolucao = input(f"Data de Devolução [{emprestimo.data_devolucao}]: ") or emprestimo.data_devolucao
 
@@ -67,7 +68,7 @@ def atualizar_emprestimo():
                                                    data_emprestimo=data_emprestimo, data_devolucao=data_devolucao)
 
         # Se o status foi alterado para "Finalizado", atualiza a quantidade do livro
-        if status_emprestimo == "Finalizado" and emprestimo.status_emprestimo != "Finalizado":
+        if status_emprestimo == "2" and emprestimo.status_emprestimo != "2":
             id_livro = emprestimo.Livros_idLivros
             livro = LivroController.buscar_livro_por_id(id_livro)
             if livro:

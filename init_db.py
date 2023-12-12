@@ -4,6 +4,7 @@ from app.controller.AlunoController import AlunoController
 from app.controller.EmprestimoController import EmprestimosController
 from app.controller.FuncionarioController import FuncionarioController
 from app.controller.ProfessorController import ProfessorController
+from app.controller.ReservaController import ReservasController
 from app.model.models import Base, Autor, Livro, AutoresDosLivros
 from app.utils.utils import get_engine_from_config, get_session
 
@@ -24,6 +25,10 @@ def criar_funcionario(nickname, senha, matricula, permissao, data_contratacao):
 
 def criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id):
     EmprestimosController.criar_emprestimo(status_emprestimo, data_emprestimo, data_devolucao, usuario_id, livro_id)
+
+
+def criar_reserva(status_reserva, data_reserva, usuario_id, livro_id):
+    ReservasController.criar_reserva(status_reserva, data_reserva, usuario_id, livro_id)
 
 
 def reset_database():
@@ -204,6 +209,12 @@ def main():
                      data_devolucao='2020-01-01', usuario_id='9', livro_id='9')
     criar_emprestimo(status_emprestimo='1', data_emprestimo='2020-01-01',
                      data_devolucao='2020-01-01', usuario_id='10', livro_id='10')
+
+    criar_reserva(status_reserva='1', data_reserva='2020-01-01', usuario_id='1', livro_id='1')
+    criar_reserva(status_reserva='1', data_reserva='2020-01-01', usuario_id='2', livro_id='2')
+    criar_reserva(status_reserva='1', data_reserva='2020-01-01', usuario_id='3', livro_id='3')
+    criar_reserva(status_reserva='1', data_reserva='2020-01-01', usuario_id='4', livro_id='4')
+    criar_reserva(status_reserva='1', data_reserva='2020-01-01', usuario_id='5', livro_id='5')
 
     print("Banco de dados inicializado e populado com sucesso!")
 

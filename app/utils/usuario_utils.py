@@ -15,7 +15,7 @@ def cadastrar_funcionario():
     nickname = input("Nickname: ")
     senha = input("Senha: ")
     matricula = input("Matrícula: ")
-    permissao = input("Permissão: ")
+    permissao = input("Permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado]: ")
     data_contratacao = input("Data de contratação (AAAA-MM-DD): ")
 
     # Validações dos dados podem ser implementadas aqui
@@ -38,7 +38,7 @@ def cadastrar_aluno():
     nickname = input("Nickname: ")
     senha = input("Senha: ")
     matricula = input("Matrícula: ")
-    permissao = input("Permissão: ")
+    permissao = input("Permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado]: ")
 
     # Obter dados específicos do aluno
     data_ingresso = input("Data de ingresso (AAAA-MM-DD): ")
@@ -65,7 +65,7 @@ def cadastrar_professor():
     nickname = input("Nickname: ")
     senha = input("Senha: ")
     matricula = input("Matrícula: ")
-    permissao = input("Permissão: ")
+    permissao = input("Permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado]: ")
 
     # Obter dados específicos do professor
     data_contratacao = input("Data de contratação (AAAA-MM-DD): ")
@@ -102,7 +102,7 @@ def atualizar_funcionario():
     nickname = input("Digite o novo nickname (deixe em branco para manter o atual): ")
     senha = input("Digite a nova senha (deixe em branco para manter a atual): ")
     matricula = input("Digite a nova matricula (deixe em branco para manter a atual): ")
-    permissao = input("Digite a nova permissão (deixe em branco para manter a atual): ")
+    permissao = input("Digite a nova permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado] (deixe em branco para manter a atual): ")
 
     # Dados específicos do funcionário
     data_contratacao = input("Digite a nova data de contratação (YYYY-MM-DD) (deixe em branco para manter a atual): ")
@@ -149,7 +149,7 @@ def atualizar_aluno():
     nickname = input("Digite o novo nickname (deixe em branco para manter o atual): ")
     senha = input("Digite a nova senha (deixe em branco para manter a atual): ")
     matricula = input("Digite a nova matricula (deixe em branco para manter a atual): ")
-    permissao = input("Digite a nova permissão (deixe em branco para manter a atual): ")
+    permissao = input("Digite a nova permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado] (deixe em branco para manter a atual): ")
 
     # Dados específicos do aluno
     data_ingresso = input("Digite a nova data de ingresso (YYYY-MM-DD) (deixe em branco para manter a atual): ")
@@ -203,7 +203,7 @@ def atualizar_professor():
     nickname = input("Digite o novo nickname (deixe em branco para manter o atual): ")
     senha = input("Digite a nova senha (deixe em branco para manter a atual): ")
     matricula = input("Digite a nova matricula (deixe em branco para manter a atual): ")
-    permissao = input("Digite a nova permissão (deixe em branco para manter a atual): ")
+    permissao = input("Digite a nova permissão [1 - Administrador | 2 - Bibliotecário | 3 - Usuario Autenticado | 4 - Usuario Nao Autenticado] (deixe em branco para manter a atual): ")
 
     # Dados específicos do professor
     data_contratacao = input("Digite a nova data de contratação (YYYY-MM-DD) (deixe em branco para manter a atual): ")

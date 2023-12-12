@@ -1,16 +1,9 @@
 from app.controller.UsuarioController import UsuarioController
 from app.view.admin_view import menu_administrador
+from app.view.bibliotecario_view import menu_bibliotecario
 from app.view.usuario_autenticado_view import menu_usuario_autenticado
 from app.utils.utils import login
-
-
-def menu_bibliotecario():
-    # Implementar o menu do bibliotecário
-    pass
-
-
-def menu_usuario_nao_autenticado(usuario_logado):
-    pass
+from app.view.usuario_view import menu_usuario
 
 
 def main():
@@ -20,11 +13,11 @@ def main():
         if usuario_logado.permissao == '1':  # Admin
             menu_administrador(usuario_logado)
         elif usuario_logado.permissao == '2':  # Bibliotecário
-            menu_bibliotecario()
+            menu_bibliotecario(usuario_logado)
         elif usuario_logado.permissao == '3':  # Usuário Autenticado
             menu_usuario_autenticado(usuario_logado)
         elif usuario_logado.permissao == '4':  # Usuário não autenticado
-            menu_usuario_nao_autenticado(usuario_logado)
+            menu_usuario(usuario_logado)
         else:
             print("Permissão desconhecida.")
 
