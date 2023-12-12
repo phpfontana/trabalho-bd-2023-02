@@ -24,3 +24,8 @@ Este repositório contém o trabalho da disciplina de Banco de Dados.
     ```bash
     python init_db.py
     ```
+
+2. Execute o comando abaixo para iniciar a aplicação:
+    ```bash
+    python app.py
+    ```
